@@ -5,9 +5,56 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: auto;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+html,
+body,
+.App {
+  background-color: #5c5c5c;
+  height: 100%;
+  margin: 0;
+  min-height: 100vh;
+  overflow: auto;
+  padding: 0;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+}
+
+.page-title {
+  color: #fff;
+}
+
+.game-area {
+  background-color: #dadada;
+  border: 2px solid #000;
+  height: 600px;
+  margin: 50px auto;
+  position: relative;
+  width: 600px;
+}
+
+.snake-dot {
+  background-color: #000;
+  z-index: 2;
+}
+.snake-dot,
+.snake-food {
+  border: 1px solid #fff;
+  height: 2%;
+  position: absolute;
+  width: 2%;
+}
+
+.snake-food {
+  background-color: #d00;
+  z-index: 1;
 }
