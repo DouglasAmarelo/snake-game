@@ -1,19 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import Snake from './Components/Snake';
+import React, { useEffect, useState } from 'react';
 import Food from './Components/Food';
-import { getRandomCoordinates } from './utils/randomCoordinates';
 import GameOver from './Components/GameOver';
+import Snake from './Components/Snake';
+import { getRandomCoordinates } from './utils/randomCoordinates';
 
-const App = () => {
-  const initialState = [
+const INITIAL_STATE = {
+  INITIAL_SNAKE_DOTS: [
     [0, 0],
     [2, 0]
-  ];
+  ],
+  INITIAL_DIRECTION: { direction: 'RIGHT' },
+  INITIAL_SPEED: 300,
+  INITIAL_FOOD_POSITION: getRandomCoordinates()
+};
+
+const App = () => {
+  const [directions, setDirections] = useState(INITIAL_STATE.INITIAL_DIRECTION);
+  const [speed, setSpeed] = useState(INITIAL_STATE.INITIAL_SPEED);
+  const [snakeDots, setSnakeDots] = useState(INITIAL_STATE.INITIAL_SNAKE_DOTS);
+  const [food, setFood] = useState(INITIAL_STATE.INITIAL_FOOD_POSITION);
   const [gameOver, setGameOver] = useState(false);
-  const [directions, setDirections] = useState({ direction: 'RIGHT' });
-  const [speed, setSpeed] = useState(300);
-  const [food, setFood] = useState([0, 0]);
-  const [snakeDots, setSnakeDots] = useState(initialState);
+
+  const restartGame = () => {
+    setDirections(INITIAL_STATE.INITIAL_DIRECTION);
+    setSpeed(INITIAL_STATE.INITIAL_SPEED);
+    setSnakeDots(INITIAL_STATE.INITIAL_SNAKE_DOTS);
+    setFood(INITIAL_STATE.INITIAL_FOOD_POSITION);
+    setGameOver(false);
+  };
 
   const checkIfOutOfBorders = snakeDots => {
     const gameArea = 100; // 100% da área
@@ -47,12 +61,13 @@ const App = () => {
   };
 
   const checkIfEat = (snakeDots, food) => {
-    const snakeHead = snakeDots[snakeDots.length - 1];
-    const snakeFood = food;
+    const dots = [...snakeDots];
+    const snakeHead = dots[dots.length - 1];
+    const snakeFood = [...food];
 
     if (snakeHead[0] === snakeFood[0] && snakeHead[1] === snakeFood[1]) {
       setFood(getRandomCoordinates());
-      enlargeSnake(snakeDots);
+      enlargeSnake(dots);
       increaseSpeed();
     }
   };
@@ -135,7 +150,7 @@ const App = () => {
             <Food dot={food} />
           </>
         ) : (
-          <GameOver />
+          <GameOver restartGame={restartGame} />
         )}
       </div>
     </div>

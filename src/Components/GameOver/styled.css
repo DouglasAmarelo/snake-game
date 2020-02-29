@@ -1,6 +1,7 @@
 .game-over {
   align-items: center;
   display: flex;
+  flex-direction: column;
   height: 100%;
   justify-content: center;
 }
@@ -8,4 +9,18 @@
 .game-over h1 {
   letter-spacing: 10px;
   text-transform: uppercase;
+}
+
+.game-over button {
+  background-color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-top: 1em;
+  padding: 1.5em 4em;
+  text-transform: uppercase;
+  transition: background-color 0.3s;
+}
+
+.game-over button:hover {
+  background-color: #f1f1f1;
 }
