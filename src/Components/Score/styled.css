@@ -1,0 +1,25 @@
+.score {
+  border: 1px solid #777;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 35px;
+  margin: 10px 0 15px 0;
+}
+
+.score span {
+  display: inline-block;
+  font-size: 12px;
+  margin-right: 5px;
+  text-transform: uppercase;
+}
+.score div {
+  color: #7f7;
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  width: 40px;
+}

@@ -1,19 +1,18 @@
 .joystick {
-  height: 134px;
-  margin: 2em;
-  padding: 5px;
+  height: 130px;
+  margin: 30px;
   transform: rotate(45deg);
-  width: 134px;
+  width: 130px;
 }
 
 .joystick__button {
-  box-shadow: 0 0 7px #7f7;
-  border-radius: 50%;
   background: #000;
+  border-radius: 25%;
   border: 5px solid transparent;
+  box-shadow: 0 0 7px #7f7;
   color: transparent;
   height: 50px;
-  margin: 5px;
+  margin: 7px;
   width: 50px;
 }
 
@@ -22,8 +21,8 @@
 }
 
 .joystick__button:active {
-  box-shadow: 0 0 7px #fff;
   background-color: #141414;
+  box-shadow: 0 0 7px #fff;
 }
 
 .up {

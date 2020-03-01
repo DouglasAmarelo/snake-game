@@ -5,29 +5,34 @@ import GameOver from './Components/GameOver';
 import Joystick from './Components/Joystick';
 
 import { getRandomCoordinates } from './utils/randomCoordinates';
+import Score from './Components/Score';
 
+const snakeSize = 4;
 const INITIAL_STATE = {
-  INITIAL_SNAKE_DOTS: [
+  SNAKE_DOTS: [
     [0, 0],
-    [2, 0]
+    [4, 0]
   ],
-  INITIAL_DIRECTION: { direction: 'RIGHT' },
-  INITIAL_SPEED: 300,
-  INITIAL_FOOD_POSITION: getRandomCoordinates()
+  DIRECTION: { direction: 'RIGHT' },
+  SPEED: 300,
+  FOOD_POSITION: getRandomCoordinates(snakeSize),
+  SCORE: 0
 };
 
 const App = () => {
-  const [directions, setDirections] = useState(INITIAL_STATE.INITIAL_DIRECTION);
-  const [speed, setSpeed] = useState(INITIAL_STATE.INITIAL_SPEED);
-  const [snakeDots, setSnakeDots] = useState(INITIAL_STATE.INITIAL_SNAKE_DOTS);
-  const [food, setFood] = useState(INITIAL_STATE.INITIAL_FOOD_POSITION);
+  const [directions, setDirections] = useState(INITIAL_STATE.DIRECTION);
+  const [speed, setSpeed] = useState(INITIAL_STATE.SPEED);
+  const [snakeDots, setSnakeDots] = useState(INITIAL_STATE.SNAKE_DOTS);
+  const [food, setFood] = useState(INITIAL_STATE.FOOD_POSITION);
+  const [score, setScore] = useState(INITIAL_STATE.SCORE);
   const [gameOver, setGameOver] = useState(false);
 
   const restartGame = () => {
-    setDirections(INITIAL_STATE.INITIAL_DIRECTION);
-    setSpeed(INITIAL_STATE.INITIAL_SPEED);
-    setSnakeDots(INITIAL_STATE.INITIAL_SNAKE_DOTS);
-    setFood(INITIAL_STATE.INITIAL_FOOD_POSITION);
+    setDirections(INITIAL_STATE.DIRECTION);
+    setSpeed(INITIAL_STATE.SPEED);
+    setSnakeDots(INITIAL_STATE.SNAKE_DOTS);
+    setFood(INITIAL_STATE.FOOD_POSITION);
+    setScore(INITIAL_STATE.SCORE);
     setGameOver(false);
   };
 
@@ -68,10 +73,17 @@ const App = () => {
     const snakeFood = [...food];
 
     if (snakeHead[0] === snakeFood[0] && snakeHead[1] === snakeFood[1]) {
-      setFood(getRandomCoordinates());
+      setFood(getRandomCoordinates(snakeSize));
       enlargeSnake(dots);
       increaseSpeed();
     }
+  };
+
+  const updateScore = snakeDots => {
+    const dots = [...snakeDots];
+    const snakeLength = dots.length - 2;
+
+    setScore(snakeLength);
   };
 
   const enlargeSnake = snakeDots => {
@@ -92,14 +104,12 @@ const App = () => {
 
     const dots = [...snakeDots];
     const snakeHead = dots[dots.length - 1];
-
     const movements = {
-      UP: () => [snakeHead[0], snakeHead[1] - 2],
-      DOWN: () => [snakeHead[0], snakeHead[1] + 2],
-      LEFT: () => [snakeHead[0] - 2, snakeHead[1]],
-      RIGHT: () => [snakeHead[0] + 2, snakeHead[1]]
+      UP: () => [snakeHead[0], snakeHead[1] - snakeSize],
+      DOWN: () => [snakeHead[0], snakeHead[1] + snakeSize],
+      LEFT: () => [snakeHead[0] - snakeSize, snakeHead[1]],
+      RIGHT: () => [snakeHead[0] + snakeSize, snakeHead[1]]
     };
-
     const newDirection = movements[direction]();
 
     dots.push(newDirection);
@@ -134,16 +144,18 @@ const App = () => {
     checkIfOutOfBorders(snakeDots);
     checkIfCollapsed(snakeDots);
     checkIfEat(snakeDots, food);
+    updateScore(snakeDots);
   }, [snakeDots, directions, food]);
 
   useEffect(() => {
-    setFood(getRandomCoordinates());
+    setFood(getRandomCoordinates(snakeSize));
     document.onkeydown = onKeyDown;
   }, []);
 
   return (
     <div className="App">
-      <h1 className="page-title">Snake Game</h1>
+      <Score score={score} />
+
       <div className="game-area">
         {!gameOver ? (
           <>
@@ -154,6 +166,7 @@ const App = () => {
           <GameOver restartGame={restartGame} />
         )}
       </div>
+
       <Joystick onKeyDown={onKeyDown} />
     </div>
   );
