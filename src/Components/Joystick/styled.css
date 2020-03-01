@@ -1,0 +1,59 @@
+.joystick {
+  height: 134px;
+  margin: 2em;
+  padding: 5px;
+  transform: rotate(45deg);
+  width: 134px;
+}
+
+.joystick__button {
+  box-shadow: 0 0 7px #7f7;
+  border-radius: 50%;
+  background: #000;
+  border: 5px solid transparent;
+  color: transparent;
+  height: 50px;
+  margin: 5px;
+  width: 50px;
+}
+
+.joystick__button:focus {
+  outline: none;
+}
+
+.joystick__button:active {
+  box-shadow: 0 0 7px #fff;
+  background-color: #141414;
+}
+
+.up {
+  border-color: transparent #7f7 #7f7 transparent;
+}
+
+.up:active {
+  border-color: transparent #fff #fff transparent;
+}
+
+.right {
+  border-color: transparent transparent #7f7 #7f7;
+}
+
+.right:active {
+  border-color: transparent transparent #fff #fff;
+}
+
+.left {
+  border-color: #7f7 #7f7 transparent transparent;
+}
+
+.left:active {
+  border-color: #fff #fff transparent transparent;
+}
+
+.bottom {
+  border-color: #7f7 transparent transparent #7f7;
+}
+
+.bottom:active {
+  border-color: #fff transparent transparent #fff;
+}

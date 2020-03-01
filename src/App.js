@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import Snake from './Components/Snake';
 import Food from './Components/Food';
 import GameOver from './Components/GameOver';
-import Snake from './Components/Snake';
+import Joystick from './Components/Joystick';
+
 import { getRandomCoordinates } from './utils/randomCoordinates';
 
 const INITIAL_STATE = {
@@ -107,13 +109,15 @@ const App = () => {
 
   const onKeyDown = e => {
     const keymap = {
-      38: () => setDirections({ direction: 'UP' }),
-      40: () => setDirections({ direction: 'DOWN' }),
-      37: () => setDirections({ direction: 'LEFT' }),
-      39: () => setDirections({ direction: 'RIGHT' })
+      ArrowUp: () => setDirections({ direction: 'UP' }),
+      ArrowDown: () => setDirections({ direction: 'DOWN' }),
+      ArrowLeft: () => setDirections({ direction: 'LEFT' }),
+      ArrowRight: () => setDirections({ direction: 'RIGHT' })
     };
 
-    return (keymap[e.keyCode] && keymap[e.keyCode]()) || false;
+    return (
+      (keymap[e.key] && keymap[e.key]()) || (keymap[e] && keymap[e]()) || false
+    );
   };
 
   useEffect(() => {
@@ -129,11 +133,8 @@ const App = () => {
   useEffect(() => {
     checkIfOutOfBorders(snakeDots);
     checkIfCollapsed(snakeDots);
-  }, [snakeDots, directions]);
-
-  useEffect(() => {
     checkIfEat(snakeDots, food);
-  }, [snakeDots, food]);
+  }, [snakeDots, directions, food]);
 
   useEffect(() => {
     setFood(getRandomCoordinates());
@@ -153,6 +154,7 @@ const App = () => {
           <GameOver restartGame={restartGame} />
         )}
       </div>
+      <Joystick onKeyDown={onKeyDown} />
     </div>
   );
 };
