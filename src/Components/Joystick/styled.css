@@ -1,8 +1,8 @@
 .joystick {
-  height: 130px;
+  height: 180px;
   margin: 30px;
   transform: rotate(45deg);
-  width: 130px;
+  width: 180px;
 }
 
 .joystick__button {
@@ -11,9 +11,9 @@
   border: 5px solid transparent;
   box-shadow: 0 0 7px #7f7;
   color: transparent;
-  height: 50px;
-  margin: 7px;
-  width: 50px;
+  height: 60px;
+  margin: 15px;
+  width: 60px;
 }
 
 .joystick__button:focus {
